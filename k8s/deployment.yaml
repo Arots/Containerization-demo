@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: express-demo
+  name: express-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: express-demo
+  template:
+    metadata:
+      labels:
+        app: express-demo
+    spec:
+      containers:
+      - image: demo-express
+        name: demo-express
+        imagePullPolicy: Never
+        ports:
+        - name: http
+          containerPort: 3000
+      - image: postgres
+        name: postgres
+        ports:
+        - name: http
+          containerPort: 5432
+        env:
+        - name: POSTGRES_PASSWORD
+          value: "password"
